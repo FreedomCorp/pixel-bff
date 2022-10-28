@@ -1,5 +1,7 @@
 package net.pixelplugins.bff.security.filter;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.pixelplugins.bff.service.auth.AuthenticationService;
 import net.pixelplugins.bff.service.auth.UserService;
@@ -18,18 +20,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Slf4j
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
     private UserService service;
-
-    @Autowired
     private JwtUtil jwt;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getRequestURI().contains("/api/v1/auth");
+        return request.getRequestURI().startsWith("/api/v1/auth");
     }
 
     @Override
